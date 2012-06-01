@@ -49,9 +49,6 @@
     <Compile Include="ChoiceWindow.xaml.cs">
       <DependentUpon>ChoiceWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EmailWindow.xaml.cs">
-      <DependentUpon>EmailWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
     </Compile>
@@ -66,6 +63,10 @@
     <ProjectReference Include="..\Common\Config\Config.csproj">
       <Project>{8176F259-FA07-4CA5-943D-4AA31D5FB857}</Project>
       <Name>Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Email.WPF\Email.WPF.csproj">
+      <Project>{BE36FFC8-73AA-4234-BF12-342BF3223D00}</Project>
+      <Name>Email.WPF</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Email\Email.csproj">
       <Project>{4B1E68FF-639F-4C26-98FC-59409D584BE2}</Project>
@@ -85,10 +86,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="EmailWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MessageBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

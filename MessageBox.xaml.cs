@@ -2,6 +2,7 @@
 using System.Text;
 using System.Windows;
 using Email;
+using Email.WPF;
 using Translator;
 using Translator.WPF;
 namespace Communication.WPF {
@@ -10,20 +11,21 @@ namespace Communication.WPF {
     /// </summary>
     public partial class MessageBox : ACommunicationWindow {
 
-        public MessageBox(string title, string message, ICommunicationReceiver owner)
+        public MessageBox(string title, string message, ICommunicationReceiver owner, EmailHandler email)
             : base(owner) {
             InitializeComponent();
             TranslationHelpers.translateWindow(this);
             this.Title = title;
             messageLabel.Content = message;
+            this.email = email;
             if (owner != null)
                 this.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
             else
                 this.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }
 
-        public MessageBox(string title, string message, RequestType type, ICommunicationReceiver owner)
-            : this(title, message, owner) {
+        public MessageBox(string title, string message, RequestType type, ICommunicationReceiver owner, EmailHandler email)
+            : this(title, message, owner, email) {
             if (type == RequestType.Question) {
                 cancelButton.Visibility = System.Windows.Visibility.Visible;
                 submitButton.Visibility = System.Windows.Visibility.Collapsed;
@@ -38,8 +40,8 @@ namespace Communication.WPF {
         }
 
 
-        public MessageBox(string title, string message, Exception e, MessageTypes type, ICommunicationReceiver owner)
-            : this(title, message, owner) {
+        public MessageBox(string title, string message, Exception e, MessageTypes type, ICommunicationReceiver owner, EmailHandler email)
+            : this(title, message, owner, email) {
             switch (type) {
                 case MessageTypes.Error:
                     cancelButton.Visibility = System.Windows.Visibility.Collapsed;
@@ -48,8 +50,6 @@ namespace Communication.WPF {
                         exceptionText.Text = recurseExceptions(e);
                         if (e.GetType() == typeof(CommunicatableException)) {
                             submitButton.Visibility = System.Windows.Visibility.Visible;
-                            //                            if(!((CommunicatableException)e).submittable)
-                            //                              submitButton.Visibility = System.Windows.Visibility.Collapsed;
                         } else {
                             submitButton.Visibility = System.Windows.Visibility.Visible;
                         }
@@ -99,12 +99,11 @@ namespace Communication.WPF {
         private void okButton_Click(object sender, RoutedEventArgs e) {
             this.DialogResult = true;
         }
+        
         private EmailHandler email;
-
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             if (submitButton.Visibility == System.Windows.Visibility.Visible) {
-                //                email = new EmailHandler();
-                //              email.checkAvailability(checkAvailabilityDone);
+                email.checkAvailability(checkAvailabilityDone);
                 TranslationHelpers.translate(submitButton,"CheckingConnection");
             }
         }
@@ -121,7 +120,8 @@ namespace Communication.WPF {
         }
 
         private void submitButton_Click(object sender, RoutedEventArgs e) {
-            if (!this.checkEmail())
+            string address = Email.WPF.EmailWPFHelper.getEmail(this, null);
+            if (address == null)
                 return;
 
             StringBuilder body = new StringBuilder();
@@ -131,10 +131,13 @@ namespace Communication.WPF {
             body.AppendLine();
             body.AppendLine(exceptionText.Text);
             body.AppendLine();
+            body.AppendLine(Application.Current.Properties.ToString());
+            body.AppendLine();
+            body.AppendLine();
 
             submitButton.IsEnabled = false;
             TranslationHelpers.translate(submitButton,"SendingReport");
-            email.sendEmail("submissions@masgau.org", "submissions@masgau.org", email_config.email, "MASGAU Error - " + this.Title, body.ToString(), sendEmailDone);
+            email.sendEmail("MASGAU Error - " + this.Title, body.ToString(), sendEmailDone);
         }
 
         private void sendEmailDone(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e) {

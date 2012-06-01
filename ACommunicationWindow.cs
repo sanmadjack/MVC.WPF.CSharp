@@ -9,7 +9,7 @@ using Translator.WPF;
 namespace Communication.WPF {
     public abstract class ACommunicationWindow : System.Windows.Window, ICommunicationReceiver, ITranslateableWindow {
         protected static Brush default_progress_color;
-        protected Email.AEmailConfig email_config;
+        
         private SynchronizationContext _context;
         public SynchronizationContext context {
             get {
@@ -150,21 +150,9 @@ namespace Communication.WPF {
         #endregion
 
 
-        protected bool checkEmail() {
-            if (email_config.email == null || email_config.email == "") {
-                EmailWindow get_email = new EmailWindow(this);
-                if ((bool)get_email.ShowDialog()) {
-                    email_config.email = get_email.email;
-                } else {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         #region MessageBox showing things
         public bool displayQuestion(string title, string message) {
-            MessageBox box = new MessageBox(title, message, RequestType.Question, this);
+            MessageBox box = new MessageBox(title, message, RequestType.Question, this, null);
             return (bool)box.ShowDialog();
         }
         public bool displayError(string title, string message) {
@@ -180,7 +168,7 @@ namespace Communication.WPF {
             return displayMessage(title, message, MessageTypes.Info, null);
         }
         private bool displayMessage(string title, string message, MessageTypes type, Exception e) {
-            MessageBox box = new MessageBox(title, message, e, type, this);
+            MessageBox box = new MessageBox(title, message, e, type, this, null);
             return (bool)box.ShowDialog();
         }
         #endregion
