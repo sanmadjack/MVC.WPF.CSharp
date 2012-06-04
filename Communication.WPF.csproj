@@ -64,10 +64,6 @@
       <Project>{8176F259-FA07-4CA5-943D-4AA31D5FB857}</Project>
       <Name>Config</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\Email.WPF\Email.WPF.csproj">
-      <Project>{BE36FFC8-73AA-4234-BF12-342BF3223D00}</Project>
-      <Name>Email.WPF</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common\Email\Email.csproj">
       <Project>{4B1E68FF-639F-4C26-98FC-59409D584BE2}</Project>
       <Name>Email</Name>
@@ -75,6 +71,10 @@
     <ProjectReference Include="..\Common\MVC\MVC.csproj">
       <Project>{4670BE82-DDDF-4614-BE3B-FB5DE4226D93}</Project>
       <Name>MVC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Email.WPF\Email.WPF.csproj">
+      <Project>{BE36FFC8-73AA-4234-BF12-342BF3223D00}</Project>
+      <Name>Email.WPF</Name>
     </ProjectReference>
     <ProjectReference Include="..\Translator.WPF\Translator.WPF.csproj">
       <Project>{EBF7773B-81FB-4367-ADBD-7C75C62FFB60}</Project>
