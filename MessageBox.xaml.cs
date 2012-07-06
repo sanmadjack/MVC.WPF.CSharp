@@ -109,7 +109,7 @@ namespace Communication.WPF {
         }
 
         private void checkAvailabilityDone(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e) {
-            if (email.email_available) {
+            if ((EmailResponse)e.Result == EmailResponse.ServerReachable) {
                 submitButton.IsEnabled = true;
                 TranslationHelpers.translate(submitButton,"SendReport");
             } else {
