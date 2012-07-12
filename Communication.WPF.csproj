@@ -58,19 +58,19 @@
     <Compile Include="WPFCommunicationHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Communication\Communication.csproj">
+    <ProjectReference Include="..\Communication\Communication.csproj">
       <Project>{23E0FE77-1F5E-4B67-8F42-52F46989C4D1}</Project>
       <Name>Communication</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\Config\Config.csproj">
+    <ProjectReference Include="..\Config\Config.csproj">
       <Project>{8176F259-FA07-4CA5-943D-4AA31D5FB857}</Project>
       <Name>Config</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\Email\Email.csproj">
+    <ProjectReference Include="..\Email\Email.csproj">
       <Project>{4B1E68FF-639F-4C26-98FC-59409D584BE2}</Project>
       <Name>Email</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\MVC\MVC.csproj">
+    <ProjectReference Include="..\MVC\MVC.csproj">
       <Project>{4670BE82-DDDF-4614-BE3B-FB5DE4226D93}</Project>
       <Name>MVC</Name>
     </ProjectReference>
@@ -82,7 +82,7 @@
       <Project>{EBF7773B-81FB-4367-ADBD-7C75C62FFB60}</Project>
       <Name>Translator.WPF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\Translator\Translator.csproj">
+    <ProjectReference Include="..\Translator\Translator.csproj">
       <Project>{1B233D4E-7DF0-4608-A0D5-94D416B5B359}</Project>
       <Name>Translator</Name>
     </ProjectReference>
