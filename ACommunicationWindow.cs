@@ -10,7 +10,7 @@ namespace Communication.WPF {
     public abstract class ACommunicationWindow : System.Windows.Window, ICommunicationReceiver, ITranslateableWindow {
         protected static Brush default_progress_color;
         
-        private SynchronizationContext _context;
+        protected SynchronizationContext _context;
         public SynchronizationContext context {
             get {
                 return _context;
@@ -25,11 +25,17 @@ namespace Communication.WPF {
 
 
         public void setTranslatedTitle(string name, params string[] variables) {
-            TranslationHelpers.translate(this,name, variables);
+            this.Title = Strings.GetLabelString(name, variables);
         }
 
-        protected ACommunicationWindow(ICommunicationReceiver owner)
+        protected Config.ASettings settings;
+
+        public ACommunicationWindow() { }
+
+        protected ACommunicationWindow(ICommunicationReceiver owner, Config.ASettings settings)
             : base() {
+            this.Owner = owner as System.Windows.Window;
+            this.settings = settings;
             this.Closing += new CancelEventHandler(Window_Closing);
 
             //These intitialize the contexts of the CommunicationHandlers
@@ -105,7 +111,7 @@ namespace Communication.WPF {
                     }
                     return;
                 case RequestType.Choice:
-                    ChoiceWindow choice = new ChoiceWindow(e.title, e.message, e.options, e.default_option, this);
+                    ChoiceWindow choice = new ChoiceWindow(e.title, e.message, e.options, e.default_option, this,this.settings);
                     if ((bool)choice.ShowDialog()) {
                         choice.Close();
                         e.result.selected_index = choice.selected_index;
@@ -152,7 +158,7 @@ namespace Communication.WPF {
 
         #region MessageBox showing things
         public bool displayQuestion(string title, string message) {
-            MessageBox box = new MessageBox(title, message, RequestType.Question, this, null);
+            MessageBox box = new MessageBox(title, message, RequestType.Question, this, this.settings);
             return (bool)box.ShowDialog();
         }
         public bool displayError(string title, string message) {
@@ -168,7 +174,7 @@ namespace Communication.WPF {
             return displayMessage(title, message, MessageTypes.Info, null);
         }
         private bool displayMessage(string title, string message, MessageTypes type, Exception e) {
-            MessageBox box = new MessageBox(title, message, e, type, this, null);
+            MessageBox box = new MessageBox(title, message, e, type, this, this.settings);
             return (bool)box.ShowDialog();
         }
         #endregion

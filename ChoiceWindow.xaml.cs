@@ -6,8 +6,8 @@ namespace Communication.WPF {
     /// Interaction logic for ChoiceWindow.xaml
     /// </summary>
     public partial class ChoiceWindow : ACommunicationWindow {
-        public ChoiceWindow(string title, string message, List<string> options, string default_option, ICommunicationReceiver owner)
-            : base(owner) {
+        public ChoiceWindow(string title, string message, List<string> options, string default_option, ICommunicationReceiver owner, Config.ASettings settings)
+            : base(owner, settings) {
             InitializeComponent();
             TranslationHelpers.translateWindow(this);
             int selected = 0;

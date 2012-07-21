@@ -11,21 +11,21 @@ namespace Communication.WPF {
     /// </summary>
     public partial class MessageBox : ACommunicationWindow {
 
-        public MessageBox(string title, string message, ICommunicationReceiver owner, EmailHandler email)
-            : base(owner) {
+        public MessageBox(string title, string message, ACommunicationWindow owner, Config.ASettings settings)
+            : base(owner,settings) {
+                this.Icon = owner.Icon;
             InitializeComponent();
             TranslationHelpers.translateWindow(this);
             this.Title = title;
             messageLabel.Content = message;
-            this.email = email;
             if (owner != null)
                 this.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
             else
                 this.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }
 
-        public MessageBox(string title, string message, RequestType type, ICommunicationReceiver owner, EmailHandler email)
-            : this(title, message, owner, email) {
+        public MessageBox(string title, string message, RequestType type, ACommunicationWindow owner, Config.ASettings settings)
+            : this(title, message, owner, settings) {
             if (type == RequestType.Question) {
                 cancelButton.Visibility = System.Windows.Visibility.Visible;
                 submitButton.Visibility = System.Windows.Visibility.Collapsed;
@@ -40,8 +40,8 @@ namespace Communication.WPF {
         }
 
 
-        public MessageBox(string title, string message, Exception e, MessageTypes type, ICommunicationReceiver owner, EmailHandler email)
-            : this(title, message, owner, email) {
+        public MessageBox(string title, string message, Exception e, MessageTypes type, ACommunicationWindow owner, Config.ASettings settings)
+            : this(title, message, owner, settings) {
             switch (type) {
                 case MessageTypes.Error:
                     cancelButton.Visibility = System.Windows.Visibility.Collapsed;
