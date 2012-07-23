@@ -51,6 +51,9 @@
     <Compile Include="ChoiceWindow.xaml.cs">
       <DependentUpon>ChoiceWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmaiButton.xaml.cs">
+      <DependentUpon>EmaiButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="EmaiButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MessageBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
