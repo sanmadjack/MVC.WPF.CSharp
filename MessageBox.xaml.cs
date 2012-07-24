@@ -5,6 +5,8 @@ using Email;
 using Email.WPF;
 using Translator;
 using Translator.WPF;
+using MVC.Communication;
+
 namespace Communication.WPF {
     /// <summary>
     /// Interaction logic for MessageBox.xaml

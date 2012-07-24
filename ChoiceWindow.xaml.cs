@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using Translator.WPF;
+using MVC.Communication;
+
 namespace Communication.WPF {
     /// <summary>
     /// Interaction logic for ChoiceWindow.xaml

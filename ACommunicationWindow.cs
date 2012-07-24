@@ -6,6 +6,9 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Translator;
 using Translator.WPF;
+using MVC.Communication;
+using MVC.Communication.Interface;
+
 namespace Communication.WPF {
     public abstract class ACommunicationWindow : System.Windows.Window, ICommunicationReceiver, ITranslateableWindow {
         protected static Brush default_progress_color;
@@ -17,7 +20,7 @@ namespace Communication.WPF {
             }
         }
         protected bool _available = true;
-        public bool available {
+        public bool Available {
             get {
                 return _available;
             }
@@ -59,6 +62,15 @@ namespace Communication.WPF {
         }
         public void closeInterface() {
             this.Close();
+        }
+        public bool toggleVisibility() {
+            if (this.Visibility == System.Windows.Visibility.Visible) {
+                this.Visibility = System.Windows.Visibility.Hidden;
+                return false;
+            } else {
+                this.Visibility = System.Windows.Visibility.Visible;
+                return true;
+            }
         }
         public void hideInterface() {
             this.Visibility = System.Windows.Visibility.Hidden;

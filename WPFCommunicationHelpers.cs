@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Media;
+using MVC.Communication;
 
 namespace Communication.WPF {
     public class WPFCommunicationHelpers {
