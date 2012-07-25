@@ -8,21 +8,20 @@ namespace Communication.WPF {
     /// Interaction logic for ChoiceWindow.xaml
     /// </summary>
     public partial class ChoiceWindow : ACommunicationWindow {
-        public ChoiceWindow(string title, string message, List<string> options, string default_option, ICommunicationReceiver owner, Config.ASettings settings)
-            : base(owner, settings) {
+        public ChoiceWindow(RequestEventArgs e, ICommunicationReceiver owner, Config.ASettings settings)
+                        : base(owner, settings) {
             InitializeComponent();
             TranslationHelpers.translateWindow(this);
             int selected = 0;
-            this.Title = title;
-            messageGrp.Header = message;
-            foreach (string add_me in options) {
+            this.Title = e.title;
+            messageGrp.Header = e.message;
+            foreach (string add_me in e.options) {
                 choiceCombo.Items.Add(add_me);
-                if (add_me == default_option)
+                if (add_me == e.default_option)
                     choiceCombo.SelectedIndex = selected;
                 selected++;
             }
         }
-
 
         public string selected_item {
             get {

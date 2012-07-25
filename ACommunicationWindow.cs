@@ -114,7 +114,7 @@ namespace Communication.WPF {
         public virtual void requestInformation(RequestEventArgs e) {
             switch (e.info_type) {
                 case RequestType.Question:
-                    if (displayQuestion(e.title, e.message)) {
+                    if (displayQuestion(e)) {
                         e.result.selected_option = "Yes";
                         e.result.selected_index = 1;
                         e.response = ResponseType.OK;
@@ -123,7 +123,7 @@ namespace Communication.WPF {
                     }
                     return;
                 case RequestType.Choice:
-                    ChoiceWindow choice = new ChoiceWindow(e.title, e.message, e.options, e.default_option, this,this.settings);
+                    ChoiceWindow choice = new ChoiceWindow(e, this,this.settings);
                     if ((bool)choice.ShowDialog()) {
                         choice.Close();
                         e.result.selected_index = choice.selected_index;
@@ -169,8 +169,8 @@ namespace Communication.WPF {
 
 
         #region MessageBox showing things
-        public bool displayQuestion(string title, string message) {
-            MessageBox box = new MessageBox(title, message, RequestType.Question, this, this.settings);
+        public bool displayQuestion(RequestEventArgs e) {
+            MessageBox box = new MessageBox(e, this, this.settings);
             return (bool)box.ShowDialog();
         }
         public bool displayError(string title, string message) {
@@ -186,11 +186,36 @@ namespace Communication.WPF {
             return displayMessage(title, message, MessageTypes.Info, null);
         }
         private bool displayMessage(string title, string message, MessageTypes type, Exception e) {
-            MessageBox box = new MessageBox(title, message, e, type, this, this.settings);
+            MessageBox box = new MessageBox(type,title, message, e, this, this.settings);
             return (bool)box.ShowDialog();
         }
         #endregion
 
+        #region TranslatedMessageBoxes
+        //public static bool askTranslatedQuestion(ITranslateableWindow window, String string_name, params string[] variables) {
+        //    StringCollection mes = Strings.getStrings(string_name);
+        //    return displayQuestion(mes[StringType.Title].interpret(variables),
+        //        mes[StringType.Message].interpret(variables));
+        //}
+        public bool showTranslatedWarning(String string_name, params string[] variables) {
+            StringCollection mes = Strings.getStrings(string_name);
+            return displayWarning(mes[StringType.Title].interpret(variables),
+                mes[StringType.Message].interpret(variables));
+        }
+        public bool showTranslatedError(String string_name, params string[] variables) {
+            return showTranslatedError(string_name, null, variables);
+        }
+        public bool showTranslatedError(String string_name, Exception ex, params string[] variables) {
+            StringCollection mes = Strings.getStrings(string_name);
+            return displayError(mes[StringType.Title].interpret(variables),
+                mes[StringType.Message].interpret(variables), ex);
+        }
+        //public static bool showTranslatedInfo(ITranslateableWindow window, String string_name, params string[] variables) {
+        //    StringCollection mes = Strings.getStrings(string_name);
+        //    return displayInfo(mes[StringType.Title].interpret(variables),
+        //        mes[StringType.Message].interpret(variables));
+        //}
+        #endregion
 
 
 

@@ -26,23 +26,33 @@ namespace Communication.WPF {
                 this.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }
 
-        public MessageBox(string title, string message, RequestType type, ACommunicationWindow owner, Config.ASettings settings)
-            : this(title, message, owner, settings) {
-            if (type == RequestType.Question) {
-                cancelButton.Visibility = System.Windows.Visibility.Visible;
-                submitButton.Visibility = System.Windows.Visibility.Collapsed;
-                TranslationHelpers.translate(okButton,"Yes");
-                TranslationHelpers.translate(cancelButton,"No");
-                questionIcon.Visibility = System.Windows.Visibility.Visible;
-                exceptionExpander.Visibility = System.Windows.Visibility.Collapsed;
-            } else {
-                this.DialogResult = false;
-                throw new NotImplementedException();
+        public MessageBox(RequestEventArgs e, ACommunicationWindow owner, Config.ASettings settings)
+            : this(e.title, e.message, owner, settings) {
+
+            switch(e.info_type) {
+                case RequestType.Question:
+                    cancelButton.Visibility = System.Windows.Visibility.Visible;
+                    submitButton.Visibility = System.Windows.Visibility.Collapsed;
+                    TranslationHelpers.translate(okButton,"Yes");
+                    TranslationHelpers.translate(cancelButton,"No");
+                    questionIcon.Visibility = System.Windows.Visibility.Visible;
+                    exceptionExpander.Visibility = System.Windows.Visibility.Collapsed;
+                    break;
+                default:
+                    this.DialogResult = false;
+                    throw new NotImplementedException();
             }
         }
 
+        public MessageBox(MessageEventArgs e, ACommunicationWindow owner, Config.ASettings settings)
+            : this(e.type, e.title, e.message, e.exception, owner, settings) {
 
-        public MessageBox(string title, string message, Exception e, MessageTypes type, ACommunicationWindow owner, Config.ASettings settings)
+        }
+        public MessageBox(MessageTypes type, string title, string message, ACommunicationWindow owner, Config.ASettings settings)
+            : this(type, title, message, null, owner, settings) {
+        }
+
+        public MessageBox(MessageTypes type, string title, string message, Exception e, ACommunicationWindow owner, Config.ASettings settings)
             : this(title, message, owner, settings) {
             switch (type) {
                 case MessageTypes.Error:
@@ -91,6 +101,18 @@ namespace Communication.WPF {
             }
             return return_me.ToString();
             ;
+        }
+
+        public bool Suppressable {
+            get {
+                return this.Suppress.Visibility == System.Windows.Visibility.Visible;
+            }
+            set {
+                if (value)
+                    this.Suppress.Visibility = System.Windows.Visibility.Visible;
+                else
+                    this.Suppress.Visibility = System.Windows.Visibility.Collapsed;
+            }
         }
 
 
