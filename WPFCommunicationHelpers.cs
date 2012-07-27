@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using MVC.Communication;
 
-namespace Communication.WPF {
+namespace MVC.WPF {
     public class WPFCommunicationHelpers {
         public static Brush default_progress_color;
         public static void ApplyProgress(ProgressBar progress, ProgressUpdatedEventArgs e) {

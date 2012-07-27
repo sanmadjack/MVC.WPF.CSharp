@@ -2,14 +2,14 @@
 using System.Windows;
 using Translator.WPF;
 using MVC.Communication;
-
-namespace Communication.WPF {
+using Email;
+namespace MVC.WPF {
     /// <summary>
     /// Interaction logic for ChoiceWindow.xaml
     /// </summary>
     public partial class ChoiceWindow : ACommunicationWindow {
-        public ChoiceWindow(RequestEventArgs e, ICommunicationReceiver owner, Config.ASettings settings)
-                        : base(owner, settings) {
+        public ChoiceWindow(RequestEventArgs e, ICommunicationReceiver owner)
+                        : base(owner, null) {
             InitializeComponent();
             TranslationHelpers.translateWindow(this);
             int selected = 0;

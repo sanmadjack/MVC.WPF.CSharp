@@ -8,9 +8,13 @@ using Translator;
 using Translator.WPF;
 using MVC.Communication;
 using MVC.Communication.Interface;
-
-namespace Communication.WPF {
+using Email;
+namespace MVC.WPF {
     public abstract class ACommunicationWindow : System.Windows.Window, ICommunicationReceiver, ITranslateableWindow {
+        public bool isSameContext() {
+            return Dispatcher.FromThread(Thread.CurrentThread) != null;
+        }
+
         protected static Brush default_progress_color;
         
         protected SynchronizationContext _context;
@@ -31,14 +35,15 @@ namespace Communication.WPF {
             this.Title = Strings.GetLabelString(name, variables);
         }
 
-        protected Config.ASettings settings;
 
         public ACommunicationWindow() { }
 
-        protected ACommunicationWindow(ICommunicationReceiver owner, Config.ASettings settings)
+        private IEmailSource email_source;
+
+        protected ACommunicationWindow(ICommunicationReceiver owner, IEmailSource email_source)
             : base() {
             this.Owner = owner as System.Windows.Window;
-            this.settings = settings;
+            this.email_source = email_source;
             this.Closing += new CancelEventHandler(Window_Closing);
 
             //These intitialize the contexts of the CommunicationHandlers
@@ -114,20 +119,14 @@ namespace Communication.WPF {
         public virtual void requestInformation(RequestEventArgs e) {
             switch (e.info_type) {
                 case RequestType.Question:
-                    if (displayQuestion(e)) {
-                        e.result.selected_option = "Yes";
-                        e.result.selected_index = 1;
-                        e.response = ResponseType.OK;
-                    } else {
-                        e.response = ResponseType.Cancel;
-                    }
+                    displayQuestion(e);
                     return;
                 case RequestType.Choice:
-                    ChoiceWindow choice = new ChoiceWindow(e, this,this.settings);
+                    ChoiceWindow choice = new ChoiceWindow(e, this);
                     if ((bool)choice.ShowDialog()) {
                         choice.Close();
-                        e.result.selected_index = choice.selected_index;
-                        e.result.selected_option = choice.selected_item;
+                        e.result.SelectedIndex = choice.selected_index;
+                        e.result.SelectedOption = choice.selected_item;
                         e.response = ResponseType.OK;
                     } else {
                         e.response = ResponseType.Cancel;
@@ -170,8 +169,17 @@ namespace Communication.WPF {
 
         #region MessageBox showing things
         public bool displayQuestion(RequestEventArgs e) {
-            MessageBox box = new MessageBox(e, this, this.settings);
-            return (bool)box.ShowDialog();
+            MessageBox box = new MessageBox(e, this, this.email_source);
+            bool result = box.ShowDialog() == true;
+            if (result) {
+                e.result.SelectedOption = "Yes";
+                e.result.SelectedIndex = 1;
+                e.response = ResponseType.OK;
+            } else {
+                e.response = ResponseType.Cancel;
+            }
+            e.result.Suppressed = box.Suppressed;
+            return result;
         }
         public bool displayError(string title, string message) {
             return displayError(title, message, null);
@@ -186,17 +194,29 @@ namespace Communication.WPF {
             return displayMessage(title, message, MessageTypes.Info, null);
         }
         private bool displayMessage(string title, string message, MessageTypes type, Exception e) {
-            MessageBox box = new MessageBox(type,title, message, e, this, this.settings);
+            MessageBox box = new MessageBox(type, title, message, e, false, this, this.email_source);
             return (bool)box.ShowDialog();
         }
         #endregion
 
         #region TranslatedMessageBoxes
-        //public static bool askTranslatedQuestion(ITranslateableWindow window, String string_name, params string[] variables) {
-        //    StringCollection mes = Strings.getStrings(string_name);
-        //    return displayQuestion(mes[StringType.Title].interpret(variables),
-        //        mes[StringType.Message].interpret(variables));
-        //}
+        public bool askTranslatedQuestion(String string_name, bool suppressable, params string[] variables) {
+            StringCollection mes = Strings.getStrings(string_name);
+            string title, message;
+
+            if (mes.ContainsKey(StringType.Title))
+                title = mes[StringType.Title].interpret(variables);
+            else
+                title = string_name;
+
+            if (mes.ContainsKey(StringType.Message))
+                message = mes[StringType.Message].interpret(variables);
+            else
+                message = string_name;
+
+            RequestEventArgs e = new RequestEventArgs(RequestType.Question,title,mes[StringType.Message].interpret(variables),null,null, new RequestReply(),suppressable);
+            return displayQuestion(e);
+        }
         public bool showTranslatedWarning(String string_name, params string[] variables) {
             StringCollection mes = Strings.getStrings(string_name);
             return displayWarning(mes[StringType.Title].interpret(variables),

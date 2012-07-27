@@ -1,7 +1,7 @@
-﻿<src:ACommunicationWindow x:Class="Communication.WPF.ChoiceWindow"
+﻿<src:ACommunicationWindow x:Class="MVC.WPF.ChoiceWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:src="clr-namespace:Communication.WPF"
+            xmlns:src="clr-namespace:MVC.WPF"
         Title="$ChoiceTitle" SizeToContent="WidthAndHeight" ResizeMode="NoResize" MinWidth="300">
 
     <Grid>

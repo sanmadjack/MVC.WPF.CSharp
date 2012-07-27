@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Communication.WPF")]
+[assembly: AssemblyTitle("MVC.WPF")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Matthew Barbour")]
-[assembly: AssemblyProduct("Communication.WPF")]
+[assembly: AssemblyProduct("MVC.WPF")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4aed33d5-2408-428a-bd9e-b024787ee1ef")]
+[assembly: Guid("f53e0384-b8f2-462b-863d-0fee8f85ad3b")]
 
 // Version information for an assembly consists of the following four values:
 //
