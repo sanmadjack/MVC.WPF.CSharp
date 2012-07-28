@@ -20,10 +20,10 @@
             <TextBox Name="exceptionText" IsReadOnly="True" MaxHeight="300" Margin="0,5,0,0" />
         </Expander>
         <Label Grid.Column="1" Name="messageLabel" Grid.ColumnSpan="3" VerticalContentAlignment="Center" Margin="0,0,10,0" />
-        <Image Name="errorIcon" Stretch="None" Source="/WPF;Component/Icons/dialog-error.png" Margin="10" Visibility="Collapsed" />
-        <Image Name="warningIcon" Stretch="None" Source="/WPF;Component/Icons/dialog-warning.png" Margin="10" Visibility="Collapsed" />
-        <Image Name="infoIcon" Stretch="None" Source="/WPF;Component/Icons/dialog-information.png" Margin="10" Visibility="Collapsed" />
-        <Image Name="questionIcon" Stretch="None" Source="/WPF;Component/Icons/help-browser.png" Margin="10" Visibility="Collapsed" />
+        <Image Name="errorIcon" Stretch="None" Source="/WPF;Component/Images/dialog-error.png" Margin="10" Visibility="Collapsed" />
+        <Image Name="warningIcon" Stretch="None" Source="/WPF;Component/Images/dialog-warning.png" Margin="10" Visibility="Collapsed" />
+        <Image Name="infoIcon" Stretch="None" Source="/WPF;Component/Images/dialog-information.png" Margin="10" Visibility="Collapsed" />
+        <Image Name="questionIcon" Stretch="None" Source="/WPF;Component/Images/help-browser.png" Margin="10" Visibility="Collapsed" />
 
         
         <StatusBar Grid.ColumnSpan="2" Grid.Row="3" Name="statusBar1" HorizontalContentAlignment="Right" BorderBrush="{StaticResource {x:Static SystemColors.AppWorkspaceBrushKey}}" BorderThickness="0,1,0,0">
@@ -43,20 +43,20 @@
 
                     <e:EmailButton HorizontalAlignment="Right" Grid.Column="2" Grid.Row="2" Name="submitButton" Margin="3" Visibility="Collapsed" />
 
-                    <w:SuperButton ImageSource="/WPF;Component/Icons/20px/gtk-ok.png" ImageHeight="16" Text="$OK" 
+                    <w:SuperButton ImageSource="/WPF;Component/Images/20px/gtk-ok.png" ImageHeight="16" Text="$OK" 
                                    HorizontalAlignment="Right" Grid.Column="3" Grid.Row="2" Name="okButton" Margin="3" 
                                    Click="okButton_Click" Visibility="Collapsed" />
 
-                    <w:SuperButton ImageSource="/WPF;Component/Icons/20px/gtk-yes.png" Click="okButton_Click" Text="$Yes" Grid.Column="4" Name="yesButton"
+                    <w:SuperButton ImageSource="/WPF;Component/Images/20px/gtk-yes.png" Click="okButton_Click" Text="$Yes" Grid.Column="4" Name="yesButton"
                                    HorizontalAlignment="Right"  Grid.Row="2"  Margin="3" ImageHeight="16" Visibility="Collapsed" />
 
-                    <w:SuperButton ImageSource="/WPF;Component/Icons/20px/gtk-no.png" Click="cancelButton_Click" Text="$No" Grid.Column="5" Name="noButton"
+                    <w:SuperButton ImageSource="/WPF;Component/Images/20px/gtk-no.png" Click="cancelButton_Click" Text="$No" Grid.Column="5" Name="noButton"
                                    HorizontalAlignment="Right"  Grid.Row="2"  Margin="3" ImageHeight="16" Visibility="Collapsed" />
                  
-                    <w:SuperButton ImageSource="/WPF;Component/Icons/20px/window-close.png" Click="okButton_Click" Text="$Close" Grid.Column="6" Name="closeButton"
+                    <w:SuperButton ImageSource="/WPF;Component/Images/20px/window-close.png" Click="okButton_Click" Text="$Close" Grid.Column="6" Name="closeButton"
                                    HorizontalAlignment="Right"  Grid.Row="2"  Margin="3" ImageHeight="16" Visibility="Collapsed" />
 
-                    <w:SuperButton ImageSource="/WPF;Component/Icons/20px/gtk-cancel.png" Click="cancelButton_Click" Text="$Cancel" Grid.Column="7" Name="cancelButton"
+                    <w:SuperButton ImageSource="/WPF;Component/Images/20px/gtk-cancel.png" Click="cancelButton_Click" Text="$Cancel" Grid.Column="7" Name="cancelButton"
                                    HorizontalAlignment="Right"  Grid.Row="2"  Margin="3" ImageHeight="16" Visibility="Collapsed" />
 
                 </Grid>
