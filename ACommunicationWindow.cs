@@ -9,6 +9,7 @@ using Translator.WPF;
 using MVC.Communication;
 using MVC.Communication.Interface;
 using Email;
+using SMJ.WPF.Effects;
 namespace MVC.WPF {
     public abstract class ACommunicationWindow : System.Windows.Window, ICommunicationReceiver, ITranslateableWindow {
         public bool isSameContext() {
@@ -36,22 +37,24 @@ namespace MVC.WPF {
         }
 
 
-        public ACommunicationWindow() { }
-
-        private IEmailSource email_source;
-
-        protected ACommunicationWindow(ICommunicationReceiver owner, IEmailSource email_source)
-            : base() {
-            this.Owner = owner as System.Windows.Window;
-            this.email_source = email_source;
+        public ACommunicationWindow() {
+            this.AllowsTransparency = true;
             this.Closing += new CancelEventHandler(Window_Closing);
-
             //These intitialize the contexts of the CommunicationHandlers
             if (SynchronizationContext.Current == null)
                 SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(this.Dispatcher));
             _context = SynchronizationContext.Current;
 
             CommunicationHandler.addReceiver(this);
+        }
+
+        private IEmailSource email_source;
+
+        protected ACommunicationWindow(ICommunicationReceiver owner, IEmailSource email_source)
+            : this() {
+            this.Owner = owner as System.Windows.Window;
+            this.email_source = email_source;
+
         }
 
         #region Interface effectors
@@ -68,12 +71,23 @@ namespace MVC.WPF {
         public void closeInterface() {
             this.Close();
         }
+
+        protected double timing = 5.0;
+
         public bool toggleVisibility() {
             if (this.Visibility == System.Windows.Visibility.Visible) {
-                this.Visibility = System.Windows.Visibility.Hidden;
+                FadeEffect fade = new FadeOutEffect(timing);
+                fade.Start(this);
+
+               // this.Visibility = System.Windows.Visibility.Hidden;
+
                 return false;
             } else {
-                this.Visibility = System.Windows.Visibility.Visible;
+                FadeEffect fade = new FadeInEffect(timing);
+                fade.Start(this);
+
+             //   this.Visibility = System.Windows.Visibility.Visible;
+
                 return true;
             }
         }
@@ -94,6 +108,9 @@ namespace MVC.WPF {
         }
         void Window_Closing(object sender, CancelEventArgs e) {
             _available = false;
+            if(this.Visibility == System.Windows.Visibility.Visible)
+                toggleVisibility();
+
         }
 
 
