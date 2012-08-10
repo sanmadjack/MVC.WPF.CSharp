@@ -25,7 +25,7 @@
         <Image Name="infoIcon" Stretch="None" Source="/WPF;Component/Images/dialog-information.png" Margin="10" Visibility="Collapsed" />
         <Image Name="questionIcon" Stretch="None" Source="/WPF;Component/Images/help-browser.png" Margin="10" Visibility="Collapsed" />
 
-        
+
         <StatusBar Grid.ColumnSpan="2" Grid.Row="3" Name="statusBar1" HorizontalContentAlignment="Right" BorderBrush="{StaticResource {x:Static SystemColors.AppWorkspaceBrushKey}}" BorderThickness="0,1,0,0">
             <StatusBarItem Padding="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                 <Grid>
@@ -52,7 +52,7 @@
 
                     <w:SuperButton ImageSource="/WPF;Component/Images/20px/gtk-no.png" Click="cancelButton_Click" Text="$No" Grid.Column="5" Name="noButton"
                                    HorizontalAlignment="Right"  Grid.Row="2"  Margin="3" ImageHeight="16" Visibility="Collapsed" />
-                 
+
                     <w:SuperButton ImageSource="/WPF;Component/Images/20px/window-close.png" Click="okButton_Click" Text="$Close" Grid.Column="6" Name="closeButton"
                                    HorizontalAlignment="Right"  Grid.Row="2"  Margin="3" ImageHeight="16" Visibility="Collapsed" />
 

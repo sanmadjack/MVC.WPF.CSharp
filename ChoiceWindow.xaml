@@ -18,7 +18,7 @@
             </StatusBarItem>
         </StatusBar>
         <GroupBox Header="$ComboTitle" Name="messageGrp" Margin="5">
-                <ComboBox Height="23" Name="choiceCombo" />
-            </GroupBox>
+            <ComboBox Height="23" Name="choiceCombo" />
+        </GroupBox>
     </Grid>
 </src:ACommunicationWindow>
