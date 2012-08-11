@@ -8,9 +8,10 @@ namespace MVC.WPF {
     /// Interaction logic for ChoiceWindow.xaml
     /// </summary>
     public partial class ChoiceWindow : ACommunicationWindow {
-        public ChoiceWindow(RequestEventArgs e, ICommunicationReceiver owner)
+        public ChoiceWindow(RequestEventArgs e, ACommunicationWindow owner)
                         : base(owner, null) {
             InitializeComponent();
+            this.Icon = owner.Icon;
             TranslationHelpers.translateWindow(this);
             int selected = 0;
             this.Title = e.title;

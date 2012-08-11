@@ -38,7 +38,6 @@ namespace MVC.WPF {
 
 
         public ACommunicationWindow() {
-            this.AllowsTransparency = true;
             this.Closing += new CancelEventHandler(Window_Closing);
             //These intitialize the contexts of the CommunicationHandlers
             if (SynchronizationContext.Current == null)
@@ -231,7 +230,7 @@ namespace MVC.WPF {
             else
                 message = string_name;
 
-            RequestEventArgs e = new RequestEventArgs(RequestType.Question,title,mes[StringType.Message].interpret(variables),null,null, new RequestReply(),suppressable);
+            RequestEventArgs e = new RequestEventArgs(RequestType.Question, title, message, null, null, new RequestReply(), suppressable);
             return displayQuestion(e);
         }
         public bool showTranslatedWarning(String string_name, params string[] variables) {
