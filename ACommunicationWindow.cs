@@ -84,7 +84,7 @@ namespace MVC.WPF {
             } else {
                 FadeEffect fade = new FadeInEffect(timing);
                 fade.Start(this);
-
+                this.Activate();
              //   this.Visibility = System.Windows.Visibility.Visible;
 
                 return true;
@@ -112,6 +112,31 @@ namespace MVC.WPF {
 
         }
 
+
+        public void applyProgress(SMJ.WPF.SuperProgressBar progress, ProgressUpdatedEventArgs e) {
+            if (e.message != null) {
+                progress.Message = e.message;
+            }
+
+            progress.Value = e.value;
+            progress.Max = e.max;
+
+            progress.IsIndeterminate = e.state == ProgressState.Indeterminate;
+
+            switch (e.state) {
+                case ProgressState.Error:
+                    progress.State = SMJ.WPF.SuperProgressBarState.Error;
+                    break;
+                case ProgressState.None:
+                case ProgressState.Normal:
+                    progress.State = SMJ.WPF.SuperProgressBarState.Normal;
+                    break;
+                case ProgressState.Wait:
+                    progress.State = SMJ.WPF.SuperProgressBarState.Wait;
+                    break;
+            }
+
+        }
 
         #endregion
 

@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <GroupBox Header="$ComboTitle" Name="messageGrp" Margin="5,0,5,5">
+        <GroupBox Header="$ComboTitle" Name="messageGrp" Margin="5,3,5,5">
             <ComboBox Height="23" Name="choiceCombo" Margin="2" />
         </GroupBox>
     </Grid>
@@ -20,11 +20,12 @@
         <w:CustomWindowBorder.BottomGrid>
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-            <w:SuperButton Grid.Column="0" ImageSource="/WPF;Component/Images/20px/gtk-ok.png" Text="$Select" Name="selectBtn" Margin="3" ImageHeight="16" Click="button1_Click" />
-            <w:SuperButton Grid.Column="1" ImageSource="/WPF;Component/Images/20px/gtk-cancel.png" Text="$Cancel" Name="cancelBtn" Margin="3" ImageHeight="16" Click="cancelBtn_Click" />
+            <w:SuperButton Grid.Column="1" ImageSource="/WPF;Component/Images/20px/gtk-ok.png" Text="$Select" Name="selectBtn" Margin="3" ImageHeight="16" Click="button1_Click" />
+            <w:SuperButton Grid.Column="2" ImageSource="/WPF;Component/Images/20px/gtk-cancel.png" Text="$Cancel" Name="cancelBtn" Margin="3" ImageHeight="16" Click="cancelBtn_Click" />
             </Grid>
         </w:CustomWindowBorder.BottomGrid>
     </w:CustomWindowBorder>
