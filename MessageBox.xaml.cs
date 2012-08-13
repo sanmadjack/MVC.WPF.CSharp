@@ -6,7 +6,7 @@ using Email.WPF;
 using Translator;
 using Translator.WPF;
 using MVC.Communication;
-
+using System.Reflection;
 namespace MVC.WPF {
     /// <summary>
     /// Interaction logic for MessageBox.xaml
@@ -42,7 +42,7 @@ namespace MVC.WPF {
             body.AppendLine();
             body.AppendLine(exceptionText.Text);
             body.AppendLine();
-            body.AppendLine(Application.Current.Properties.ToString());
+            body.AppendLine(MessageHandler.getEnvironmentInfo());
             body.AppendLine();
             body.AppendLine();
 
