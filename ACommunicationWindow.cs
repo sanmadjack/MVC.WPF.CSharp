@@ -153,7 +153,7 @@ namespace MVC.WPF {
                     response = displayWarning(e.title, e.message, e.Suppressable);
                     break;
             }
-            e.response = ResponseType.OK;
+            e.response = response;
             return response;
         }
 
