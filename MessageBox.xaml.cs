@@ -63,14 +63,15 @@ namespace MVC.WPF {
                     this.DialogResult = false;
                     throw new NotImplementedException();
             }
+            this.Suppress.Content = Strings.GetLabelString("SuppressFurtherRequests");
         }
 
         public MessageBox(MessageEventArgs e, ACommunicationWindow owner, IEmailSource email_source)
-            : this(e.type, e.title, e.message, e.exception, false, owner, email_source) {
+            : this(e.type, e.title, e.message, e.exception, e.Suppressable, owner, email_source) {
                 this.e = e;
         }
-        public MessageBox(MessageTypes type, string title, string message, ACommunicationWindow owner, IEmailSource email_source)
-            : this(type, title, message, null, false, owner, email_source) {
+        public MessageBox(MessageTypes type, string title, string message, bool suppressable, ACommunicationWindow owner, IEmailSource email_source)
+            : this(type, title, message, null, suppressable, owner, email_source) {
         }
 
 

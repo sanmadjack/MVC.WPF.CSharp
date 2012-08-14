@@ -140,20 +140,21 @@ namespace MVC.WPF {
 
         #endregion
 
-        public void sendMessage(MessageEventArgs e) {
-            bool response = false;
+        public ResponseType sendMessage(MessageEventArgs e) {
+            ResponseType response = ResponseType.OK;
             switch (e.type) {
                 case MessageTypes.Error:
-                    response = displayError(e.title, e.message, e.exception);
+                     displayError(e.title, e.message, e.exception);
                     break;
                 case MessageTypes.Info:
-                    response = displayInfo(e.title, e.message);
+                    displayInfo(e.title, e.message);
                     break;
                 case MessageTypes.Warning:
-                    response = displayWarning(e.title, e.message);
+                    response = displayWarning(e.title, e.message, e.Suppressable);
                     break;
             }
             e.response = ResponseType.OK;
+            return response;
         }
 
 
@@ -222,21 +223,27 @@ namespace MVC.WPF {
             e.result.Suppressed = box.Suppressed;
             return result;
         }
-        public bool displayError(string title, string message) {
-            return displayError(title, message, null);
+        public void displayError(string title, string message) {
+            displayError(title, message, null);
         }
-        public bool displayError(string title, string message, Exception e) {
-            return displayMessage(title, message, MessageTypes.Error, e);
+        public void displayError(string title, string message, Exception e) {
+            displayMessage(title, message, MessageTypes.Error, e, false);
         }
-        public bool displayWarning(string title, string message) {
-            return displayMessage(title, message, MessageTypes.Warning, null);
+
+        public ResponseType displayWarning(string title, string message, bool suppressable) {
+            return displayMessage(title, message, MessageTypes.Warning, null, suppressable);
         }
-        public bool displayInfo(string title, string message) {
-            return displayMessage(title, message, MessageTypes.Info, null);
+
+        public void displayInfo(string title, string message) {
+           displayMessage(title, message, MessageTypes.Info, null, false);
         }
-        private bool displayMessage(string title, string message, MessageTypes type, Exception e) {
-            MessageBox box = new MessageBox(type, title, message, e, false, this, this.email_source);
-            return (bool)box.ShowDialog();
+        private ResponseType displayMessage(string title, string message, MessageTypes type, Exception e, bool suppressable) {
+            MessageBox box = new MessageBox(type, title, message, e, suppressable, this, this.email_source);
+            box.ShowDialog();
+            if (box.Suppressed)
+                return ResponseType.OKSuppressed;
+            return ResponseType.OK;
+
         }
         #endregion
 
@@ -258,17 +265,17 @@ namespace MVC.WPF {
             RequestEventArgs e = new RequestEventArgs(RequestType.Question, title, message, null, null, new RequestReply(), suppressable);
             return displayQuestion(e);
         }
-        public bool showTranslatedWarning(String string_name, params string[] variables) {
+        public ResponseType showTranslatedWarning(String string_name, params string[] variables) {
             StringCollection mes = Strings.getStrings(string_name);
             return displayWarning(mes[StringType.Title].interpret(variables),
-                mes[StringType.Message].interpret(variables));
+                mes[StringType.Message].interpret(variables), false);
         }
-        public bool showTranslatedError(String string_name, params string[] variables) {
-            return showTranslatedError(string_name, null, variables);
+        public void showTranslatedError(String string_name, params string[] variables) {
+            showTranslatedError(string_name, null, variables);
         }
-        public bool showTranslatedError(String string_name, Exception ex, params string[] variables) {
+        public void showTranslatedError(String string_name, Exception ex, params string[] variables) {
             StringCollection mes = Strings.getStrings(string_name);
-            return displayError(mes[StringType.Title].interpret(variables),
+            displayError(mes[StringType.Title].interpret(variables),
                 mes[StringType.Message].interpret(variables), ex);
         }
         //public static bool showTranslatedInfo(ITranslateableWindow window, String string_name, params string[] variables) {
