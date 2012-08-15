@@ -275,8 +275,20 @@ namespace MVC.WPF {
         }
         public void showTranslatedError(String string_name, Exception ex, params string[] variables) {
             StringCollection mes = Strings.getStrings(string_name);
-            displayError(mes[StringType.Title].interpret(variables),
-                mes[StringType.Message].interpret(variables), ex);
+            string title, message;
+
+            if (mes.ContainsKey(StringType.Title))
+                title = mes[StringType.Title].interpret(variables);
+            else
+                title = string_name;
+
+            if (mes.ContainsKey(StringType.Message))
+                message = mes[StringType.Message].interpret(variables);
+            else
+                message = string_name;
+
+            displayError(title,
+                message, ex);
         }
         //public static bool showTranslatedInfo(ITranslateableWindow window, String string_name, params string[] variables) {
         //    StringCollection mes = Strings.getStrings(string_name);
