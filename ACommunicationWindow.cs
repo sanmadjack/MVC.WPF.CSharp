@@ -95,6 +95,8 @@ namespace MVC.WPF {
         }
         public void showInterface() {
             this.Visibility = System.Windows.Visibility.Visible;
+            this.ShowInTaskbar = true;
+            this.Activate();
         }
 
         protected override void OnClosing(CancelEventArgs e) {
