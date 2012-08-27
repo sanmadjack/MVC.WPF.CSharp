@@ -114,10 +114,11 @@ namespace MVC.WPF {
 
         }
 
-
+        protected string last_message = null;
         public void applyProgress(SMJ.WPF.SuperProgressBar progress, ProgressUpdatedEventArgs e) {
-            if (e.message != null) {
+            if (e.message != null && (last_message==null||last_message!=e.message)) {
                 progress.Message = e.message;
+                last_message = e.message;
             }
 
             progress.Value = e.value;
