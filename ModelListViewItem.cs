@@ -17,7 +17,7 @@ namespace MVC.WPF {
     public class ModelListViewItem : UserControl {
         public ModelListView Parent;
 
-        private IModelItem _data;
+        protected IModelItem _data;
         public IModelItem DataSource {
             set {
                 if (_data != null)
@@ -42,35 +42,67 @@ namespace MVC.WPF {
 
 
         protected Rectangle BackgroundRectangle = new Rectangle();
+        protected Rectangle Highlight = new Rectangle();
         protected Label contentLabel = new Label();
 
         public ModelListViewItem() {
-            this.Margin = new Thickness(1);
-            this.Background = BackgroundColor;
-            BackgroundRectangle.Fill = BackgroundColor;
+            this.Padding = new Thickness(1);
+            this.Background = new SolidColorBrush(Colors.Transparent);
             BackgroundRectangle.RadiusX = 5;
             BackgroundRectangle.RadiusY = BackgroundRectangle.RadiusX;
 
-            contentLabel.Background = new SolidColorBrush(Colors.Transparent);
+            Highlight.RadiusX = 5;
+            Highlight.RadiusY = BackgroundRectangle.RadiusX;
+            Highlight.Stroke = Brushes.Black;
+            Highlight.StrokeThickness = 1;
+            Highlight.Opacity = 0;
 
+            contentLabel.Background = new SolidColorBrush(Colors.Transparent);
+            contentLabel.Padding = new Thickness(0);
+            contentLabel.Margin = new Thickness(0);
+            contentLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            contentLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch;
+
+//            contentLabel.BorderBrush = new SolidColorBrush(Colors.Black);
+  //          contentLabel.BorderThickness = new System.Windows.Thickness(1);
+
+            
             Grid grid = new Grid();
+
+
             grid.Children.Add(BackgroundRectangle);
+            grid.Children.Add(Highlight);
+
             grid.Children.Add(contentLabel);
 
             base.Content = grid;
             this.MouseDown += new MouseButtonEventHandler(UserControl_MouseLeftButtonDown);
+            this.MouseEnter += new MouseEventHandler(ModelListViewItem_MouseEnter);
+            this.MouseLeave += new MouseEventHandler(ModelListViewItem_MouseLeave);
+        }
+
+        void ModelListViewItem_MouseLeave(object sender, MouseEventArgs e) {
+            Highlight.Opacity = 0;
+        }
+
+        void ModelListViewItem_MouseEnter(object sender, MouseEventArgs e) {
+            Highlight.Opacity = 0.5;
+        }
+
+        protected void setSelected() {
+            if (DataSource.IsSelected) {
+                BackgroundRectangle.Fill = SelectedBackgroundColor;
+                changeForegroundColor(SelectedTextColor);
+            } else {
+                BackgroundRectangle.Fill = BackgroundColor;
+                changeForegroundColor(TextColor);
+            }
         }
 
         protected virtual void DataSource_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             switch (e.PropertyName) {
                 case "IsSelected":
-                    if (DataSource.IsSelected) {
-                        BackgroundRectangle.Fill = SelectedBackgroundColor;
-                        changeForegroundColor(SelectedTextColor);
-                    } else {
-                        BackgroundRectangle.Fill = BackgroundColor;
-                        changeForegroundColor(TextColor);
-                    }
+                    setSelected();
                     break;
             }
         }
@@ -79,10 +111,18 @@ namespace MVC.WPF {
             contentLabel.Foreground = brush;
 
         }
-
         protected virtual Brush SelectedTextColor {
             get {
-                return new SolidColorBrush(Colors.White);
+                return new SolidColorBrush(Colors.Black);
+
+                SolidColorBrush brush = SelectedBackgroundColor as SolidColorBrush;
+                Color color = brush.Color;
+
+                int total = color.R + color.G + color.B;
+                if(total>400)
+                    return new SolidColorBrush(Colors.Black);
+                else
+                    return new SolidColorBrush(Colors.White);
             }
         }
         protected virtual Brush TextColor {
@@ -132,7 +172,15 @@ namespace MVC.WPF {
 
 
         public virtual void LoadSourceData() {
+            BackgroundRectangle.Fill = BackgroundColor;
+            this.ToolTip = _data.ToolTip;
+            setSelected();
+            LoadContent();
+        }
+
+        protected virtual void LoadContent() {
             Content = DataSource;
+
         }
 
         protected System.Windows.Media.Color convertColor(System.Drawing.Color color) {
