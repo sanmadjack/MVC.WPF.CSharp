@@ -146,7 +146,7 @@ namespace MVC.WPF {
 
         private void UserControl_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
 
-            throw new NotImplementedException();
+          //  throw new NotImplementedException();
 
         }
 

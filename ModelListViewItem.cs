@@ -58,7 +58,7 @@ namespace MVC.WPF {
             Highlight.Opacity = 0;
 
             contentLabel.Background = new SolidColorBrush(Colors.Transparent);
-            contentLabel.Padding = new Thickness(0);
+            contentLabel.Padding = new Thickness(5);
             contentLabel.Margin = new Thickness(0);
             contentLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             contentLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch;
