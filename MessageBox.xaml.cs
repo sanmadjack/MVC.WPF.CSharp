@@ -2,11 +2,9 @@
 using System.Text;
 using System.Windows;
 using Email;
-using Email.WPF;
+using MVC.Communication;
 using Translator;
 using Translator.WPF;
-using MVC.Communication;
-using System.Reflection;
 namespace MVC.WPF {
     /// <summary>
     /// Interaction logic for MessageBox.xaml
@@ -15,8 +13,8 @@ namespace MVC.WPF {
         private RespondableEventArg e;
 
         public MessageBox(string title, string message, bool suppressable, ACommunicationWindow owner, IEmailSource email_source)
-            : base(owner,email_source) {
-                this.Icon = owner.Icon;
+            : base(owner, email_source) {
+            this.Icon = owner.Icon;
             InitializeComponent();
 
             if (email_source != null) {
@@ -52,8 +50,8 @@ namespace MVC.WPF {
 
         public MessageBox(RequestEventArgs e, ACommunicationWindow owner, IEmailSource email_source)
             : this(e.title, e.message, e.suppressable, owner, email_source) {
-                this.e = e;
-            switch(e.info_type) {
+            this.e = e;
+            switch (e.info_type) {
                 case RequestType.Question:
                     yesButton.Visibility = System.Windows.Visibility.Visible;
                     noButton.Visibility = System.Windows.Visibility.Visible;
@@ -68,7 +66,7 @@ namespace MVC.WPF {
 
         public MessageBox(MessageEventArgs e, ACommunicationWindow owner, IEmailSource email_source)
             : this(e.type, e.title, e.message, e.exception, e.Suppressable, owner, email_source) {
-                this.e = e;
+            this.e = e;
         }
         public MessageBox(MessageTypes type, string title, string message, bool suppressable, ACommunicationWindow owner, IEmailSource email_source)
             : this(type, title, message, null, suppressable, owner, email_source) {
@@ -128,8 +126,8 @@ namespace MVC.WPF {
             }
         }
         public bool Suppressed {
-            get{
-                return this.Suppress.IsChecked==true;
+            get {
+                return this.Suppress.IsChecked == true;
             }
         }
 
@@ -142,7 +140,7 @@ namespace MVC.WPF {
             this.DialogResult = true;
         }
 
-        
+
 
     }
 }

@@ -4,12 +4,10 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Translator;
-using Translator.WPF;
-using MVC.Communication;
-using MVC.Communication.Interface;
 using Email;
+using MVC.Communication;
 using SMJ.WPF.Effects;
+using Translator;
 namespace MVC.WPF {
     public abstract class ACommunicationWindow : System.Windows.Window, ICommunicationReceiver, ITranslateableWindow {
         public bool isSameContext() {
@@ -17,7 +15,7 @@ namespace MVC.WPF {
         }
 
         protected static Brush default_progress_color;
-        
+
         protected SynchronizationContext _context;
         public SynchronizationContext context {
             get {
@@ -78,14 +76,14 @@ namespace MVC.WPF {
                 FadeEffect fade = new FadeOutEffect(timing);
                 fade.Start(this);
 
-               // this.Visibility = System.Windows.Visibility.Hidden;
+                // this.Visibility = System.Windows.Visibility.Hidden;
 
                 return false;
             } else {
                 FadeEffect fade = new FadeInEffect(timing);
                 fade.Start(this);
                 this.Activate();
-             //   this.Visibility = System.Windows.Visibility.Visible;
+                //   this.Visibility = System.Windows.Visibility.Visible;
 
                 return true;
             }
@@ -109,14 +107,14 @@ namespace MVC.WPF {
         }
         void Window_Closing(object sender, CancelEventArgs e) {
             _available = false;
-            if(this.Visibility == System.Windows.Visibility.Visible)
+            if (this.Visibility == System.Windows.Visibility.Visible)
                 toggleVisibility();
 
         }
 
         protected string last_message = null;
         public void applyProgress(SMJ.WPF.SuperProgressBar progress, ProgressUpdatedEventArgs e) {
-            if (e.message != null && (last_message==null||last_message!=e.message)) {
+            if (e.message != null && (last_message == null || last_message != e.message)) {
                 progress.Message = e.message;
                 last_message = e.message;
             }
@@ -147,7 +145,7 @@ namespace MVC.WPF {
             ResponseType response = ResponseType.OK;
             switch (e.type) {
                 case MessageTypes.Error:
-                     displayError(e.title, e.message, e.exception);
+                    displayError(e.title, e.message, e.exception);
                     break;
                 case MessageTypes.Info:
                     displayInfo(e.title, e.message);
@@ -238,7 +236,7 @@ namespace MVC.WPF {
         }
 
         public void displayInfo(string title, string message) {
-           displayMessage(title, message, MessageTypes.Info, null, false);
+            displayMessage(title, message, MessageTypes.Info, null, false);
         }
         private ResponseType displayMessage(string title, string message, MessageTypes type, Exception e, bool suppressable) {
             MessageBox box = new MessageBox(type, title, message, e, suppressable, this, this.email_source);

@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using Translator.WPF;
+﻿using System.Windows;
 using MVC.Communication;
-using Email;
+using Translator.WPF;
 namespace MVC.WPF {
     /// <summary>
     /// Interaction logic for ChoiceWindow.xaml
     /// </summary>
     public partial class ChoiceWindow : ACommunicationWindow {
         public ChoiceWindow(RequestEventArgs e, ACommunicationWindow owner)
-                        : base(owner, null) {
+            : base(owner, null) {
             InitializeComponent();
             this.Icon = owner.Icon;
             TranslationHelpers.translateWindow(this);

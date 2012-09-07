@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Windows.Input;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 namespace MVC.WPF {
     /// <summary>
     /// Interaction logic for ModelListView.xaml
@@ -60,8 +60,8 @@ namespace MVC.WPF {
         private void removeItem(IModelItem item, int index) {
             lock (ItemStack.Children) {
                 ModelListViewItem match = null;
-                foreach(ModelListViewItem i in ItemStack.Children) {
-                    if(i.DataSource==item) {
+                foreach (ModelListViewItem i in ItemStack.Children) {
+                    if (i.DataSource == item) {
                         match = i;
                         break;
                     }
@@ -86,9 +86,9 @@ namespace MVC.WPF {
         private void addItem(IModelItem item, int index) {
             ModelListViewItem view_item = TemplateItem.CreateItem();
             view_item.DataSource = item;
-            view_item.Parent = this;
+            view_item.ParentList = this;
             lock (ItemStack.Children) {
-                if(index>-1)
+                if (index > -1)
                     ItemStack.Children.Insert(index, view_item);
                 else
                     ItemStack.Children.Add(view_item);
@@ -106,7 +106,7 @@ namespace MVC.WPF {
         }
 
         void _model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            switch(e.Action) {
+            switch (e.Action) {
                 case NotifyCollectionChangedAction.Reset:
                     refreshFromModel();
                     break;
@@ -117,7 +117,7 @@ namespace MVC.WPF {
                     removeItems(e.OldItems, e.OldStartingIndex);
                     break;
                 default:
-                throw new NotImplementedException();
+                    throw new NotImplementedException();
             }
         }
 
@@ -132,7 +132,7 @@ namespace MVC.WPF {
 
         public IModelItem SelectedItem {
             get {
-                lock(SelectedItems) {
+                lock (SelectedItems) {
                     if (SelectedItems.Count != 1)
                         return null;
 
@@ -146,7 +146,7 @@ namespace MVC.WPF {
 
         private void UserControl_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
 
-          //  throw new NotImplementedException();
+            //  throw new NotImplementedException();
 
         }
 
@@ -158,7 +158,7 @@ namespace MVC.WPF {
                 switch (Keyboard.Modifiers) {
                     case ModifierKeys.Control:
                         clicked.IsSelected = !clicked.IsSelected;
-                        if(clicked.IsSelected)
+                        if (clicked.IsSelected)
                             last_clicked = clicked;
                         break;
                     case ModifierKeys.Shift:
@@ -166,7 +166,7 @@ namespace MVC.WPF {
                             if (item == last_clicked) {
                                 item.IsSelected = true;
                                 set_to = !set_to;
-                            } else   if (item == clicked) {
+                            } else if (item == clicked) {
                                 item.IsSelected = true;
 
 
@@ -178,9 +178,9 @@ namespace MVC.WPF {
                         }
                         break;
                     default:
-                            foreach (ModelListViewItem item in ItemStack.Children) {
-                                item.IsSelected = item == clicked;
-                            }
+                        foreach (ModelListViewItem item in ItemStack.Children) {
+                            item.IsSelected = item == clicked;
+                        }
                         last_clicked = clicked;
                         break;
                 }

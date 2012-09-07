@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
 namespace MVC.WPF {
     public class ModelListViewItem : UserControl {
-        public ModelListView Parent;
+        public ModelListView ParentList;
 
         protected IModelItem _data;
         public IModelItem DataSource {
@@ -63,10 +55,10 @@ namespace MVC.WPF {
             contentLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             contentLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch;
 
-//            contentLabel.BorderBrush = new SolidColorBrush(Colors.Black);
-  //          contentLabel.BorderThickness = new System.Windows.Thickness(1);
+            //            contentLabel.BorderBrush = new SolidColorBrush(Colors.Black);
+            //          contentLabel.BorderThickness = new System.Windows.Thickness(1);
 
-            
+
             Grid grid = new Grid();
 
 
@@ -119,7 +111,7 @@ namespace MVC.WPF {
                 Color color = brush.Color;
 
                 int total = color.R + color.G + color.B;
-                if(total>400)
+                if (total > 400)
                     return new SolidColorBrush(Colors.Black);
                 else
                     return new SolidColorBrush(Colors.White);
@@ -162,8 +154,8 @@ namespace MVC.WPF {
         }
 
         protected void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            if (Parent != null) {
-                Parent.ItemWasClicked(this);
+            if (ParentList != null) {
+                ParentList.ItemWasClicked(this);
             } else {
                 IsSelected = !IsSelected;
             }
