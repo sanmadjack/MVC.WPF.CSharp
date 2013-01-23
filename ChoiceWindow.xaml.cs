@@ -5,8 +5,8 @@ namespace MVC.WPF {
     /// <summary>
     /// Interaction logic for ChoiceWindow.xaml
     /// </summary>
-    public partial class ChoiceWindow : ACommunicationWindow {
-        public ChoiceWindow(RequestEventArgs e, ACommunicationWindow owner)
+    public partial class ChoiceWindow : AViewWindow {
+        public ChoiceWindow(RequestEventArgs e, AViewWindow owner)
             : base(owner, null) {
             InitializeComponent();
             this.Icon = owner.Icon;

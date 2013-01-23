@@ -9,10 +9,10 @@ namespace MVC.WPF {
     /// <summary>
     /// Interaction logic for MessageBox.xaml
     /// </summary>
-    public partial class MessageBox : ACommunicationWindow {
+    public partial class MessageBox : AViewWindow {
         private RespondableEventArg e;
 
-        public MessageBox(string title, string message, bool suppressable, ACommunicationWindow owner, IEmailSource email_source)
+        public MessageBox(string title, string message, bool suppressable, AViewWindow owner, IEmailSource email_source)
             : base(owner, email_source) {
             this.Icon = owner.Icon;
             InitializeComponent();
@@ -48,7 +48,7 @@ namespace MVC.WPF {
             submitButton.Subject = "MASGAU Error - " + this.Title;
         }
 
-        public MessageBox(RequestEventArgs e, ACommunicationWindow owner, IEmailSource email_source)
+        public MessageBox(RequestEventArgs e, AViewWindow owner, IEmailSource email_source)
             : this(e.title, e.message, e.suppressable, owner, email_source) {
             this.e = e;
             switch (e.info_type) {
@@ -64,16 +64,16 @@ namespace MVC.WPF {
             this.Suppress.Content = Strings.GetLabelString("SuppressFurtherRequests");
         }
 
-        public MessageBox(MessageEventArgs e, ACommunicationWindow owner, IEmailSource email_source)
+        public MessageBox(MessageEventArgs e, AViewWindow owner, IEmailSource email_source)
             : this(e.type, e.title, e.message, e.exception, e.Suppressable, owner, email_source) {
             this.e = e;
         }
-        public MessageBox(MessageTypes type, string title, string message, bool suppressable, ACommunicationWindow owner, IEmailSource email_source)
+        public MessageBox(MessageTypes type, string title, string message, bool suppressable, AViewWindow owner, IEmailSource email_source)
             : this(type, title, message, null, suppressable, owner, email_source) {
         }
 
 
-        public MessageBox(MessageTypes type, string title, string message, Exception e, bool suppressable, ACommunicationWindow owner, IEmailSource email_source)
+        public MessageBox(MessageTypes type, string title, string message, Exception e, bool suppressable, AViewWindow owner, IEmailSource email_source)
             : this(title, message, suppressable, owner, email_source) {
             switch (type) {
                 case MessageTypes.Error:

@@ -1,4 +1,4 @@
-﻿<src:ACommunicationWindow x:Class="MVC.WPF.MessageBox"
+﻿<src:AViewWindow x:Class="MVC.WPF.MessageBox"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:src="clr-namespace:MVC.WPF"
@@ -65,4 +65,4 @@
             </Grid>
         </w:CustomWindowBorder.BottomGrid>
     </w:CustomWindowBorder>
-</src:ACommunicationWindow>
+</src:AViewWindow>

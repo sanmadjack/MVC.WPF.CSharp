@@ -1,4 +1,4 @@
-﻿<src:ACommunicationWindow x:Class="MVC.WPF.ChoiceWindow"
+﻿<src:AViewWindow x:Class="MVC.WPF.ChoiceWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:w="clr-namespace:SMJ.WPF;assembly=WPF"
@@ -29,4 +29,4 @@
             </Grid>
         </w:CustomWindowBorder.BottomGrid>
     </w:CustomWindowBorder>
-</src:ACommunicationWindow>
+</src:AViewWindow>
