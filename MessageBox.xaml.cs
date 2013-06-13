@@ -20,6 +20,7 @@ namespace MVC.WPF {
             if (email_source != null) {
                 submitButton.From = email_source.EmailSender;
                 submitButton.To = email_source.EmailRecipient;
+				submitButton.Source = email_source;
             }
 
             TranslationHelpers.translateWindow(this);
