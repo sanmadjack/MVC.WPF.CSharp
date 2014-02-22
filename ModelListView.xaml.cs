@@ -162,6 +162,7 @@ namespace MVC.WPF {
                             last_clicked = clicked;
                         break;
                     case ModifierKeys.Shift:
+						try {
                         foreach (ModelListViewItem item in ItemStack.Children) {
                             if (item == last_clicked) {
                                 item.IsSelected = true;
@@ -176,12 +177,15 @@ namespace MVC.WPF {
                                 item.IsSelected = set_to;
                             }
                         }
+						} catch {}
                         break;
                     default:
-                        foreach (ModelListViewItem item in ItemStack.Children) {
-                            item.IsSelected = item == clicked;
-                        }
-                        last_clicked = clicked;
+						try {
+							foreach (ModelListViewItem item in ItemStack.Children) {
+								item.IsSelected = item == clicked;
+							}
+							last_clicked = clicked;
+						} catch { }
                         break;
                 }
             }
